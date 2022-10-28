@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from MainWindow import Ui_MainWindow
+from Canvas import Canvas
 
 import sys
 
@@ -11,7 +11,7 @@ def main():
     app.exec()
 
 
-class SnakeGame(QMainWindow, Ui_MainWindow):
+class SnakeGame(QMainWindow, Canvas):
     def __init__(self, *args, **kwargs):
         super(SnakeGame, self).__init__(*args, **kwargs)
         self.setupUi(self)
