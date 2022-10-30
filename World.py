@@ -18,10 +18,10 @@ class World(QtWidgets.QWidget):
         super().__init__()
         self.snake = []
         self.food = Point(0,0)
-        self.timer = QtCore.QTimer()
         self.listeners = []
-        self.setFocusPolicy(Qt.StrongFocus)
+        self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.updateWorld)
+        self.setFocusPolicy(Qt.StrongFocus)
 
     def reset(self):
         self.snake.clear()
@@ -29,11 +29,11 @@ class World(QtWidgets.QWidget):
         self.snake.append(Point(30,120))
         self.snake.append(Point(0,120))
         self.trail = self.snake[len(self.snake) - 1]
+        self.new_food_location()
         self.left_direction = False
         self.right_direction = True
         self.up_direction = False
         self.down_direction = False
-        self.new_food_location()
         self.timer.start(100)
     
     def keyPressEvent(self, event):
@@ -56,9 +56,9 @@ class World(QtWidgets.QWidget):
 
     def updateWorld(self):
         self.move_forward()
+        self.check_food_consumed()
         self.check_collision()
         self.check_maximum_size()
-        self.check_food_consumed()
         self.repaint()
 
     def move_forward(self):
@@ -88,7 +88,7 @@ class World(QtWidgets.QWidget):
         head = self.snake[0]
         if head.getPx() == self.food.getPx() and head.getPy() == self.food.getPy():
             self.grow()
-            self.on_score_increase()
+            self.score_increased()
             self.new_food_location()
 
     def check_collision(self):
@@ -134,7 +134,7 @@ class World(QtWidgets.QWidget):
         for listener in self.listeners:
             listener.onGameLost()
 
-    def on_score_increase(self):
+    def score_increased(self):
         for listener in self.listeners:
             listener.onScoreIncrease()
 

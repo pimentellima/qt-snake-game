@@ -30,13 +30,17 @@ class Canvas(QtWidgets.QWidget, Listener):
             self.world = World()   
 
             self.world.add_listener(self)
+
             world_layout = QGridLayout()
-            self.world.setLayout(world_layout)
             world_layout.addWidget(self.gameEnd)
+            self.world.setLayout(world_layout)
+            self.setFont(DEFAULT_FONT)
+            self.setLayout(hbox)
+            self.setFocusPolicy(Qt.StrongFocus)
 
             text_palette = QPalette()
             text_palette.setColor(QPalette.WindowText, TEXT_COLOR)
-            self.setFont(DEFAULT_FONT)
+
             self.menu.setAlignment(Qt.AlignCenter)
             self.menu.setText("PRESSIONE ENTER PARA INICIAR \n USE AS SETAS DIRECIONAIS PARA SE MOVER")
             self.menu.setPalette(text_palette)
@@ -48,7 +52,6 @@ class Canvas(QtWidgets.QWidget, Listener):
             board.setFixedSize(600, 450)
             board.addWidget(self.menu)
             board.addWidget(self.world)
-
             board_palette = QPalette()
             board_palette.setColor(QPalette.Window, GAME_COLOR)
             board.setAutoFillBackground(True)
@@ -59,8 +62,6 @@ class Canvas(QtWidgets.QWidget, Listener):
             hbox.setContentsMargins(0,0,0,0)
             hbox.addWidget(board)
             hbox.addWidget(self.scoreboard)
-            self.setLayout(hbox)
-            self.setFocusPolicy(Qt.StrongFocus)
 
         def onGameLost(self) -> None:
             self.gameEnd.setText("PERDEU")
@@ -79,9 +80,9 @@ class Canvas(QtWidgets.QWidget, Listener):
             if event.key() == QtCore.Qt.Key_Return and self.menu.isVisible():
                 self.world.reset()
                 self.scoreboard.reset()
-                self.world.setFocus()
                 self.menu.setVisible(False)
                 self.gameEnd.setVisible(False)
+                self.world.setFocus()
                 self.world.setVisible(True) 
             elif event.key() == QtCore.Qt.Key_Return and self.gameEnd.isVisible():
                 self.menu.setVisible(True)
