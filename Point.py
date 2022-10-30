@@ -6,10 +6,6 @@ POINT_HEIGHT = 30
 POINT_WIDTH = 30
 
 class Point(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
-        px = None
-        py = None
 
     def __init__(self, px, py):
         self.px = px

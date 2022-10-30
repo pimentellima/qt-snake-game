@@ -1,6 +1,6 @@
-from tkinter import CENTER
+from re import X
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QMainWindow,QApplication,QLabel,QWidget, QStackedWidget, QShortcut
+from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QHBoxLayout, QMainWindow,QApplication,QLabel,QWidget, QStackedWidget, QShortcut
 from PyQt5.QtGui import QPixmap, QPalette, QKeySequence
 from PyQt5.QtCore import Qt
 from World import World
@@ -11,8 +11,17 @@ TEXT_COLOR = QtGui.QColor(151, 117, 170)
 DEFAULT_FONT = QtGui.QFont("SANS SERIF", 14)
 DEFAULT_FONT.setBold(True)
 
+class Listener:
+    def onGameWon(self) -> None:
+        pass
+    def onGameLost(self) -> None:
+        pass
+    def onScoreIncrease(self) -> None:
+        pass
+    
 
-class Canvas(QtWidgets.QWidget):
+class Canvas(QtWidgets.QWidget, Listener):
+    
         def __init__(self):
             super().__init__()
             self.menu = QLabel()
@@ -20,18 +29,25 @@ class Canvas(QtWidgets.QWidget):
             self.scoreboard = Scoreboard()
             self.world = World()   
 
-            menu_palette = QPalette()
-            menu_palette.setColor(QPalette.WindowText, TEXT_COLOR)
+            self.world.add_listener(self)
+            world_layout = QGridLayout()
+            self.world.setLayout(world_layout)
+            world_layout.addWidget(self.gameEnd)
+
+            text_palette = QPalette()
+            text_palette.setColor(QPalette.WindowText, TEXT_COLOR)
             self.setFont(DEFAULT_FONT)
             self.menu.setAlignment(Qt.AlignCenter)
             self.menu.setText("PRESSIONE ENTER PARA INICIAR \n USE AS SETAS DIRECIONAIS PARA SE MOVER")
-            self.menu.setPalette(menu_palette)
+            self.menu.setPalette(text_palette)
              
+            self.gameEnd.setPalette(text_palette)
+            self.gameEnd.setAlignment(Qt.AlignCenter)            
+
             board = QStackedWidget()
             board.setFixedSize(600, 450)
             board.addWidget(self.menu)
             board.addWidget(self.world)
-
 
             board_palette = QPalette()
             board_palette.setColor(QPalette.Window, GAME_COLOR)
@@ -46,10 +62,27 @@ class Canvas(QtWidgets.QWidget):
             self.setLayout(hbox)
             self.setFocusPolicy(Qt.StrongFocus)
 
+        def onGameLost(self) -> None:
+            self.gameEnd.setText("PERDEU")
+            self.setFocus()
+            self.gameEnd.setVisible(True)
+        
+        def oneGameWon(self) -> None:
+            self.gameEnd.setText("VENCEU")
+            self.setFocus()
+            self.gameEnd.setVisible(True)
+        
+        def onScoreIncrease(self) -> None:
+            self.scoreboard.increase_score()
 
         def keyPressEvent(self, event):
-            if event.key() == QtCore.Qt.Key_Space:
-                self.menu.setVisible(False)
+            if event.key() == QtCore.Qt.Key_Return and self.menu.isVisible():
                 self.world.reset()
+                self.scoreboard.reset()
                 self.world.setFocus()
+                self.menu.setVisible(False)
+                self.gameEnd.setVisible(False)
                 self.world.setVisible(True) 
+            elif event.key() == QtCore.Qt.Key_Return and self.gameEnd.isVisible():
+                self.menu.setVisible(True)
+                self.world.setVisible(False)

@@ -16,15 +16,15 @@ POINT_WIDTH = 30
 class World(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.is_running = False
         self.snake = []
         self.food = Point(0,0)
-        self.setFocusPolicy(Qt.StrongFocus)
         self.timer = QtCore.QTimer()
+        self.listeners = []
+        self.setFocusPolicy(Qt.StrongFocus)
         self.timer.timeout.connect(self.updateWorld)
 
     def reset(self):
-        self.snake.clear
+        self.snake.clear()
         self.snake.append(Point(60,120))
         self.snake.append(Point(30,120))
         self.snake.append(Point(0,120))
@@ -88,6 +88,7 @@ class World(QtWidgets.QWidget):
         head = self.snake[0]
         if head.getPx() == self.food.getPx() and head.getPy() == self.food.getPy():
             self.grow()
+            self.on_score_increase()
             self.new_food_location()
 
     def check_collision(self):
@@ -100,7 +101,7 @@ class World(QtWidgets.QWidget):
         for i in range(1, len(self.snake)):
             point = self.snake[i]
             if point.getPx() == head.getPx() and point.getPy() == head.getPy():
-                self.timer.cancel()
+                self.timer.stop()
                 self.game_over()
                 return
 
@@ -125,10 +126,20 @@ class World(QtWidgets.QWidget):
         self.snake.append(Point(self.trail.getPx(), self.trail.getPy()))
 
     def game_won(self):
-        print("game won")
+        for listener in self.listeners:
+            listener.onGameWon()
 
     def game_over(self):
         self.timer.stop()
+        for listener in self.listeners:
+            listener.onGameLost()
+
+    def on_score_increase(self):
+        for listener in self.listeners:
+            listener.onScoreIncrease()
+
+    def add_listener(self, listener):
+        self.listeners.append(listener)
 
     def paintEvent(self, event):
         qp = QtGui.QPainter()
