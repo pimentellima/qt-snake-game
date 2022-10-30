@@ -29,14 +29,14 @@ class Canvas(QtWidgets.QWidget, Listener):
             text_palette.setColor(QPalette.WindowText, TEXT_COLOR)
 
             self.menu.setAlignment(Qt.AlignCenter)
-            self.menu.setText("PRESSIONE ENTER PARA INICIAR \n USE AS SETAS DIRECIONAIS PARA SE MOVER")
+            self.menu.setText("PRESSIONE ENTER PARA INICIAR \n\n\n USE AS SETAS DIRECIONAIS PARA SE MOVER")
             self.menu.setPalette(text_palette)
              
             self.gameEnd.setPalette(text_palette)
             self.gameEnd.setAlignment(Qt.AlignCenter)            
 
             board = QStackedWidget()
-            board.setFixedSize(600, 450)
+            board.setFixedSize(WORLD_WIDTH, WORLD_HEIGHT)
             board.addWidget(self.menu)
             board.addWidget(self.world)
             board_palette = QPalette()
@@ -73,11 +73,11 @@ class Canvas(QtWidgets.QWidget, Listener):
         def keyPressEvent(self, event):
             if event.key() == QtCore.Qt.Key_Return and self.menu.isVisible():
                 self.world.reset()
-                self.scoreboard.reset()
                 self.menu.setVisible(False)
-                self.gameEnd.setVisible(False)
                 self.world.setFocus()
                 self.world.setVisible(True) 
             elif event.key() == QtCore.Qt.Key_Return and self.gameEnd.isVisible():
-                self.menu.setVisible(True)
+                self.scoreboard.reset()
+                self.gameEnd.setVisible(False)
                 self.world.setVisible(False)
+                self.menu.setVisible(True)
