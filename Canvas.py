@@ -7,11 +7,11 @@ from Scoreboard import Scoreboard
 from constants import *
 
 class Listener:
-    def onGameWon(self) -> None:
+    def on_game_won(self) -> None:
         pass
-    def onGameLost(self) -> None:
+    def on_game_lost(self) -> None:
         pass
-    def onScoreIncrease(self) -> None:
+    def on_score_increase(self) -> None:
         pass
 
 class Canvas(QtWidgets.QWidget, Listener):
@@ -57,17 +57,17 @@ class Canvas(QtWidgets.QWidget, Listener):
             self.setLayout(hbox)
             self.setFocusPolicy(Qt.StrongFocus)
 
-        def onGameLost(self) -> None:
+        def on_game_lost(self) -> None:
             self.gameEnd.setText("PERDEU")
             self.setFocus()
             self.gameEnd.setVisible(True)
         
-        def oneGameWon(self) -> None:
+        def on_game_won(self) -> None:
             self.gameEnd.setText("VENCEU")
             self.setFocus()
             self.gameEnd.setVisible(True)
         
-        def onScoreIncrease(self) -> None:
+        def on_score_increase(self) -> None:
             self.scoreboard.increase_score()
 
         def keyPressEvent(self, event):

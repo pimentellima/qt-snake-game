@@ -8,14 +8,14 @@ class Point(QtWidgets.QWidget):
         self.px = px
         self.py = py
 
-    def setLocation(self, px, py):
+    def set_location(self, px, py):
         self.px = px
         self.py = py
 
-    def getPx(self):
+    def get_px(self):
         return self.px
 
-    def getPy(self):
+    def get_py(self):
         return self.py
 
     def draw(self, qp):

@@ -11,7 +11,7 @@ class World(QtWidgets.QWidget):
         self.food = Point(0,0)
         self.listeners = []
         self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.updateWorld)
+        self.timer.timeout.connect(self.update_world)
         self.setFocusPolicy(Qt.StrongFocus)
 
     def reset(self):
@@ -45,7 +45,7 @@ class World(QtWidgets.QWidget):
             self.up_direction = False
             self.down_direction = False
 
-    def updateWorld(self):
+    def update_world(self):
         self.move_forward()
         self.check_food_consumed()
         self.check_collision()
@@ -55,50 +55,50 @@ class World(QtWidgets.QWidget):
     def move_forward(self):
         self.trail = self.snake[len(self.snake) - 1]
         head = self.snake[0]
-        next_px = head.getPx()
-        next_py = head.getPy()
+        next_px = head.get_px()
+        next_py = head.get_py()
 
         if self.right_direction:
-            head.setLocation(head.getPx() + POINT_WIDTH, head.getPy())
+            head.set_location(head.get_px() + POINT_WIDTH, head.get_py())
         elif self.left_direction:
-            head.setLocation(head.getPx() - POINT_WIDTH, head.getPy())
+            head.set_location(head.get_px() - POINT_WIDTH, head.get_py())
         elif self.up_direction:
-            head.setLocation(head.getPx(), head.getPy() - POINT_HEIGHT)
+            head.set_location(head.get_px(), head.get_py() - POINT_HEIGHT)
         elif self.down_direction:
-            head.setLocation(head.getPx(), head.getPy() + POINT_HEIGHT)
+            head.set_location(head.get_px(), head.get_py() + POINT_HEIGHT)
 
         for i in range(1, len(self.snake)):
             point = self.snake[i]
-            aux_px = point.getPx()
-            aux_py = point.getPy()
-            point.setLocation(next_px, next_py)
+            aux_px = point.get_px()
+            aux_py = point.get_py()
+            point.set_location(next_px, next_py)
             next_px = aux_px
             next_py = aux_py
 
     def check_food_consumed(self):
         head = self.snake[0]
-        if head.getPx() == self.food.getPx() and head.getPy() == self.food.getPy():
+        if head.get_px() == self.food.get_px() and head.get_py() == self.food.get_py():
             self.grow()
             self.score_increased()
             self.new_food_location()
 
     def check_collision(self):
         head = self.snake[0]
-        if (head.getPx() == WORLD_WIDTH or head.getPx() < 0 or
-                head.getPy() == WORLD_HEIGHT or head.getPy() < 0):
+        if (head.get_px() == WORLD_WIDTH or head.get_px() < 0 or
+                head.get_py() == WORLD_HEIGHT or head.get_py() < 0):
             self.timer.stop()
             self.game_over()
             return
         for i in range(1, len(self.snake)):
             point = self.snake[i]
-            if point.getPx() == head.getPx() and point.getPy() == head.getPy():
+            if point.get_px() == head.get_px() and point.get_py() == head.get_py():
                 self.timer.stop()
                 self.game_over()
                 return
 
     def check_maximum_size(self):
         if len(self.snake) == (WORLD_HEIGHT / POINT_WIDTH) * (WORLD_HEIGHT / POINT_HEIGHT):
-            self.timer.cancel()
+            self.timer.stop()
             self.game_won()
 
     def new_food_location(self):
@@ -107,27 +107,27 @@ class World(QtWidgets.QWidget):
             px = randint(0, WORLD_WIDTH / POINT_WIDTH - 2)  * POINT_WIDTH
             py = randint(0, WORLD_HEIGHT / POINT_HEIGHT - 2) * POINT_HEIGHT
             for point in self.snake:
-                if px == point.getPx() and py == point.getPy():
+                if px == point.get_px() and py == point.get_py():
                     valid = False 
                     break 
             valid = True
-        self.food.setLocation(px,py)           
+        self.food.set_location(px,py)           
 
     def grow(self):
-        self.snake.append(Point(self.trail.getPx(), self.trail.getPy()))
+        self.snake.append(Point(self.trail.get_px(), self.trail.get_py()))
 
     def game_won(self):
         for listener in self.listeners:
-            listener.onGameWon()
+            listener.on_game_won()
 
     def game_over(self):
         self.timer.stop()
         for listener in self.listeners:
-            listener.onGameLost()
+            listener.on_game_lost()
 
     def score_increased(self):
         for listener in self.listeners:
-            listener.onScoreIncrease()
+            listener.on_score_increase()
 
     def add_listener(self, listener):
         self.listeners.append(listener)
