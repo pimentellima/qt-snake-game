@@ -1,8 +1,16 @@
 from PyQt5.uic.properties import QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-from World import POINT_WIDTH, POINT_HEIGHT
 
-class Point:
+POINT_HEIGHT = 30
+POINT_WIDTH = 30
+
+class Point(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        px = None
+        py = None
+
     def __init__(self, px, py):
         self.px = px
         self.py = py
@@ -17,5 +25,6 @@ class Point:
     def getPy(self):
         return self.py
 
-    def draw(self, painter):
-        painter.drawRect(self.px, self.py,  POINT_WIDTH, POINT_HEIGHT)
+    def draw(self, qp):
+        qp.setRenderHint(QtGui.QPainter.Antialiasing)
+        qp.drawRoundedRect(self.px, self.py,  POINT_WIDTH, POINT_HEIGHT, 8, 8)
