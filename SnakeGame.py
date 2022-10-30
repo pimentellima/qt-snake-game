@@ -10,7 +10,6 @@ class SnakeGame(QMainWindow) :
         self.setCentralWidget(canvas)
         self.setWindowTitle("Snake Game")
 
-
 app = QApplication(sys.argv)
 window = SnakeGame()
 window.show()

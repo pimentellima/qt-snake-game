@@ -13,7 +13,6 @@ class Listener:
         pass
     def onScoreIncrease(self) -> None:
         pass
-    
 
 class Canvas(QtWidgets.QWidget, Listener):
     

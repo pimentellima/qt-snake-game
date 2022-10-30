@@ -5,7 +5,6 @@ from PyQt5.QtCore import Qt
 from constants import *
 from Point import Point
 
-
 class World(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
