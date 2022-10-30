@@ -25,13 +25,6 @@ class Canvas(QtWidgets.QWidget, Listener):
 
             self.world.add_listener(self)
 
-            world_layout = QGridLayout()
-            world_layout.addWidget(self.gameEnd)
-            self.world.setLayout(world_layout)
-            self.setFont(DEFAULT_FONT)
-            self.setLayout(hbox)
-            self.setFocusPolicy(Qt.StrongFocus)
-
             text_palette = QPalette()
             text_palette.setColor(QPalette.WindowText, TEXT_COLOR)
 
@@ -56,6 +49,13 @@ class Canvas(QtWidgets.QWidget, Listener):
             hbox.setContentsMargins(0,0,0,0)
             hbox.addWidget(board)
             hbox.addWidget(self.scoreboard)
+
+            world_layout = QGridLayout()
+            world_layout.addWidget(self.gameEnd)
+            self.world.setLayout(world_layout)
+            self.setFont(DEFAULT_FONT)
+            self.setLayout(hbox)
+            self.setFocusPolicy(Qt.StrongFocus)
 
         def onGameLost(self) -> None:
             self.gameEnd.setText("PERDEU")

@@ -1,5 +1,4 @@
 from random import randint
-import random
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from constants import *
@@ -105,8 +104,8 @@ class World(QtWidgets.QWidget):
     def new_food_location(self):
         valid = False
         while not valid:
-            px = random.randint(0, WORLD_WIDTH / POINT_WIDTH - 2)  * POINT_WIDTH
-            py = random.randint(0, WORLD_HEIGHT / POINT_HEIGHT - 2) * POINT_HEIGHT
+            px = randint(0, WORLD_WIDTH / POINT_WIDTH - 2)  * POINT_WIDTH
+            py = randint(0, WORLD_HEIGHT / POINT_HEIGHT - 2) * POINT_HEIGHT
             for point in self.snake:
                 if px == point.getPx() and py == point.getPy():
                     valid = False 
