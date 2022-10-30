@@ -1,9 +1,7 @@
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtGui import QPalette
 from PyQt5.QtWidgets import QGridLayout, QLabel
-
-SCOREBOARD_COLOR = QtGui.QColor(43, 43, 44)
-TEXT_COLOR = QtGui.QColor(151, 117, 170)
+from constants import *
 
 class Scoreboard(QtWidgets.QWidget):
 

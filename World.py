@@ -2,16 +2,9 @@ from random import randint
 import random
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-
+from constants import *
 from Point import Point
 
-FRUIT_COLOR = QtGui.QColor(253, 152, 67)
-SNAKE_COLOR = QtGui.QColor(103, 133, 88)
-REFRESH_RATE = 500
-WORLD_HEIGHT = 450
-WORLD_WIDTH = 600
-POINT_HEIGHT = 30
-POINT_WIDTH = 30
 
 class World(QtWidgets.QWidget):
     def __init__(self):
