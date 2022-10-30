@@ -1,6 +1,4 @@
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMainWindow, QApplication
 from Canvas import Canvas
 import sys
 

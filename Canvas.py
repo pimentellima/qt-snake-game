@@ -1,15 +1,10 @@
-from re import X
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QHBoxLayout, QMainWindow,QApplication,QLabel,QWidget, QStackedWidget, QShortcut
-from PyQt5.QtGui import QPixmap, QPalette, QKeySequence
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QLabel, QStackedWidget
+from PyQt5.QtGui import QPalette
 from PyQt5.QtCore import Qt
 from World import World
 from Scoreboard import Scoreboard
-
-GAME_COLOR = QtGui.QColor(60, 63, 65)
-TEXT_COLOR = QtGui.QColor(151, 117, 170)
-DEFAULT_FONT = QtGui.QFont("SANS SERIF", 14)
-DEFAULT_FONT.setBold(True)
+from constants import *
 
 class Listener:
     def onGameWon(self) -> None:

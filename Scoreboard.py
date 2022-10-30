@@ -1,7 +1,6 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QPixmap, QPalette
-from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QHBoxLayout, QMainWindow,QApplication,QLabel,QWidget, QStackedWidget, QShortcut
-from Point import Point
+from PyQt5 import QtGui, QtWidgets
+from PyQt5.QtGui import QPalette
+from PyQt5.QtWidgets import QGridLayout, QLabel
 
 SCOREBOARD_COLOR = QtGui.QColor(43, 43, 44)
 TEXT_COLOR = QtGui.QColor(151, 117, 170)
