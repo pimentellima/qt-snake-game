@@ -1,14 +1,21 @@
 from random import randint
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import Qt
 from constants import *
 from Point import Point
 
+
 class World(QtWidgets.QWidget):
+
     def __init__(self):
         super().__init__()
         self.snake = []
-        self.food = Point(0,0)
+        self.trail = None
+        self.food = Point(0, 0)
+        self.left_direction = None
+        self.right_direction = None
+        self.up_direction = None
+        self.down_direction = None
         self.listeners = []
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.update_world)

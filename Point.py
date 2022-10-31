@@ -1,8 +1,8 @@
 from PyQt5.uic.properties import QtGui
-from PyQt5 import QtGui, QtWidgets
 from constants import *
 
-class Point(QtWidgets.QWidget):
+
+class Point:
 
     def __init__(self, px, py):
         self.px = px

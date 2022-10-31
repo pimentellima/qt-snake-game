@@ -2,7 +2,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from Canvas import Canvas
 import sys
 
-class SnakeGame(QMainWindow) :
+
+class main(QMainWindow):
     def __init__(self):
         super().__init__()
         canvas = Canvas()
@@ -10,7 +11,8 @@ class SnakeGame(QMainWindow) :
         self.setCentralWidget(canvas)
         self.setWindowTitle("Snake Game")
 
+
 app = QApplication(sys.argv)
-window = SnakeGame()
+window = main()
 window.show()
 app.exec()
