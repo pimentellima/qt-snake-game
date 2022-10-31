@@ -3,7 +3,7 @@ from Canvas import Canvas
 import sys
 
 
-class main(QMainWindow):
+class Main(QMainWindow):
     def __init__(self):
         super().__init__()
         canvas = Canvas()
@@ -13,6 +13,6 @@ class main(QMainWindow):
 
 
 app = QApplication(sys.argv)
-window = main()
+window = Main()
 window.show()
 app.exec()
