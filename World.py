@@ -32,7 +32,7 @@ class World(QtWidgets.QWidget):
         self.right_direction = True
         self.up_direction = False
         self.down_direction = False
-        self.timer.start(100)
+        self.timer.start(REFRESH_RATE)
     
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up and (self.left_direction or self.right_direction):
@@ -111,12 +111,11 @@ class World(QtWidgets.QWidget):
     def new_food_location(self):
         valid = False
         while not valid:
-            px = randint(0, WORLD_WIDTH / POINT_WIDTH - 2)  * POINT_WIDTH
+            px = randint(0, WORLD_WIDTH / POINT_WIDTH - 2) * POINT_WIDTH
             py = randint(0, WORLD_HEIGHT / POINT_HEIGHT - 2) * POINT_HEIGHT
             for point in self.snake:
                 if px == point.get_px() and py == point.get_py():
-                    valid = False 
-                    break 
+                    break
             valid = True
         self.food.set_location(px,py)           
 
