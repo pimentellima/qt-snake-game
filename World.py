@@ -128,7 +128,6 @@ class World(QtWidgets.QWidget):
             listener.on_game_won()
 
     def game_over(self):
-        self.timer.stop()
         for listener in self.listeners:
             listener.on_game_lost()
 
