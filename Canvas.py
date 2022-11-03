@@ -5,17 +5,7 @@ from PyQt5.QtCore import Qt
 from World import World
 from Scoreboard import Scoreboard
 from constants import *
-
-
-class Listener:
-    def on_game_won(self) -> None:
-        pass
-
-    def on_game_lost(self) -> None:
-        pass
-
-    def on_score_increase(self) -> None:
-        pass
+from Listener import *
 
 
 class Canvas(QtWidgets.QWidget, Listener):
@@ -28,6 +18,7 @@ class Canvas(QtWidgets.QWidget, Listener):
         self.world = World()
 
         self.world.add_listener(self)
+        self.world.add_listener(self.scoreboard)
 
         text_palette = QPalette()
         text_palette.setColor(QPalette.WindowText, TEXT_COLOR)
@@ -70,9 +61,6 @@ class Canvas(QtWidgets.QWidget, Listener):
         self.gameEnd.setText("VENCEU\n\nPRESSIONE ENTER PARA VOLTAR AO MENU")
         self.setFocus()
         self.gameEnd.setVisible(True)
-
-    def on_score_increase(self) -> None:
-        self.scoreboard.increase_score()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return and self.menu.isVisible():
